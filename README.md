@@ -1,3 +1,3 @@
-my personal website (currently in development)
+my personal website
 <br><br>
-available at https://madrejean.github.io/
+available at [madrejean.neocities.org](https://madrejean.neocities.org/)
