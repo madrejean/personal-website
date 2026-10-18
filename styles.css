@@ -12,13 +12,8 @@ body {
     background-color: #000000;
     color: #ffffff;
 
-    font-family: "PixeloidMono";
-    font-size: 18px;
-    text-shadow:
-            #5e0f70 0px 2px, #5e0f70 2px 0px, #5e0f70 2px 2px,
-            #000 -2px 0px, #000 0px -2px, #000 -2px -2px, #000 2px -2px, #000 -2px 2px,
-            #000 0px 4px, #000 4px 0px, #000 4px 4px,
-            #000 4px 2px, #000 2px 4px, #000 4px -2px, #000 -2px 4px;
+    font-family: "MainFont", monospace;
+    font-size: 32px;
     
     display: flex;
     flex-direction: column;
@@ -26,12 +21,15 @@ body {
     gap: 1vw;
 }
 @font-face {
-    font-family: "PixeloidMono";
-    src: url("assets/fonts/PixeloidMono.ttf");
+    font-family: "MainFont";
+    src: url("assets/fonts/main.ttf");
 }
-img, span, h1, h2, h3, h4, h5, h6 {
+img, span, h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
+}
+img {
+    user-select: none;
 }
 
 ul {    
@@ -44,11 +42,33 @@ ul li {
     margin: 0;
     padding: 0;
 }
-ul li:not(.nomarker)::before {
+ul:not(.nomarker) li:not(.nomarker)::before {
     content: ".";
     display: inline-block;
     position: absolute;
     transform: translateY(-5px) translateX(-20px);
+}
+
+ul.contents li a {
+    color: white;
+}
+table.contents tr td a {
+    color: white;
+}
+
+table.contents {
+    border: 2px solid #725f6f;
+    border-collapse: collapse;
+}
+table.contents td, table.contents th {
+    border: 2px solid #725f6f;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+table.contents thead th {
+    font-weight: normal;
+    color: #725f6f;
 }
 
 
@@ -133,7 +153,7 @@ ul li:not(.nomarker)::before {
 
 
 .textbox {
-    border-image: url("assets/art/border.png") 18 18 18 18 fill / 18px 18px 18px 18px;
+    border-image: url("assets/art/border.webp") 18 18 18 18 fill / 18px 18px 18px 18px;
     padding: 36px 36px 36px 36px;
     
     border-image-repeat: repeat;
@@ -146,43 +166,67 @@ ul li:not(.nomarker)::before {
     padding: 20px 20px 20px 20px;
 }
 .textbox.alt {
-    border-image: url("assets/art/border2.png") 18 18 18 18 fill / 18px 18px 18px 18px;
+    border-image: url("assets/art/border2.webp") 18 18 18 18 fill / 18px 18px 18px 18px;
     border-image-repeat: repeat;
 }
 .imgborder {
-    border-image: url("assets/art/border.png") 18 18 18 18 fill / 18px 18px 18px 18px;
-    padding: 20px 20px 20px 20px;
     image-rendering: pixelated;
     max-width: 100%;
     min-width: 1px;
     @media(orientation: portrait) {
-        border-image: none;
         padding: 0;
     }
 }
 
 .window {
-    border-image: url("assets/art/border_window.png") 40 36 12 12 fill / 40px 36px 12px 12px;
-    padding: 40px 36px 12px 12px;
+    border-image: url("assets/art/border_window.webp") 40 36 12 12 fill / 40px 36px 12px 12px;
+    padding: 48px 36px 24px 24px;
     
     border-image-repeat: stretch;
     image-rendering: pixelated;
-    @media(orientation: portrait) {
-        padding: 28px 28px 28px 28px;
-    }
+}
+.window.alt {
+    border-image: url("assets/art/border_window2.webp") 12 12 12 12 fill / 12px 12px 12px 12px;
+    padding: 12px 12px 12px 12px;
+    
+    border-image-repeat: stretch;
+    image-rendering: pixelated;
 }
 .windowtitle {
-    font-size: 18px;
-    text-shadow: none;
+    font-size: 24px;
     color: #ffffff;
-    margin-top: -3px;
+    margin-top: -6px;
     margin-left: 8px;
+    user-select: none;
+    pointer-events: none;
+}
+.windowtext span {
+    color: #1e1e1e;
+}
+.windowtext span.big {
+    color: #1e1e1e;
+    font-size: 24px;
+}
+.imgwindow {
+    border-image: url("assets/art/border2.webp") 18 18 18 18 fill / 18px 18px 18px 18px;
+    padding: 18px 18px 18px 18px;
+    image-rendering: pixelated;
+    max-width: 100%;
+    min-width: 1px;
+}
+
+.vseparator {
+    background-color: #1e1e1e;
+    width: 100%;
+    min-height: 2px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 
 
 .bg1, .bg2, .bg3 {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     top: 300px;
@@ -195,19 +239,19 @@ ul li:not(.nomarker)::before {
     animation-iteration-count: infinite;
 }
 .bg1 {
-    background-image: url("assets/art/bg_1.png");
+    background-image: url("assets/art/bg_1.webp");
     animation-name: bgLeft;
     animation-duration: 160s;
     
     top: 100px;
 }
 .bg2 {
-    background-image: url("assets/art/bg_2.png");
+    background-image: url("assets/art/bg_2.webp");
     animation-name: bgRight;
     animation-duration: 120s;
 }
 .bg3 {
-    background-image: url("assets/art/bg_3.png");
+    background-image: url("assets/art/bg_3.webp");
     animation-name: bgLeft;
     animation-duration: 80s;
 }
@@ -221,22 +265,10 @@ ul li:not(.nomarker)::before {
     100% { background-position-x: -640px; }
 }
 
-
-
-
-
 header {
     user-select: none;
 }
 .menubutton {
-    color: #ffffff;
-    font-family: "PixeloidMono";
-    font-size: 18px;
-    text-shadow:
-            #5e0f70 0px 2px, #5e0f70 2px 0px, #5e0f70 2px 2px,
-            #000 -2px 0px, #000 0px -2px, #000 -2px -2px, #000 2px -2px, #000 -2px 2px,
-            #000 0px 4px, #000 4px 0px, #000 4px 4px,
-            #000 4px 2px, #000 2px 4px, #000 4px -2px, #000 -2px 4px;
     text-wrap-mode: nowrap;
     @media(orientation: portrait) {
         text-wrap-mode: wrap;
@@ -244,7 +276,7 @@ header {
     }
 }
 .menubutton::before {
-    content: url("assets/art/pointer.png");
+    content: url("assets/art/pointer.webp");
     display: inline-block;
     image-rendering: pixelated;
     margin-right: 5px;
@@ -259,72 +291,6 @@ header {
     opacity: 1;
 }
 
-
-
-
-
-
-
-
-
-
-
-.pablo {
-    width: 200px;
-    height: 200px;
-    background-image: url("assets/art/pablo.png");
-    animation-name: pablo;
-    animation-duration: 1s;
-    animation-timing-function: steps(30);
-    animation-iteration-count: infinite;
-    transform-origin: left;
-    transform: translateY(20px);
-    @media(orientation: portrait) {
-        transform: scale(0.7) translateY(-30px);
-    }
-}
-.pablo-container {
-    animation-name: pabloContainer;
-    animation-duration: 3s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    transform: translateY(0px);
-}
-@keyframes pabloContainer {
-    0% {
-        animation-timing-function: ease-out;
-        transform: translateY(0px);
-    }
-    25% {
-        animation-timing-function: ease-in;
-        transform: translateY(20px);
-    }
-    50% {
-        animation-timing-function: ease-out;
-        transform: translateY(0px);
-    }
-    75% {
-        animation-timing-function: ease-in;
-        transform: translateY(-20px);
-    }
-    100% {
-        animation-timing-function: ease-out;
-        transform: translateY(0px);
-    }
-}
-@keyframes pablo {
-    from {
-        background-position: 0px 0;
-    }
-    to {
-        background-position: -6000px 0;
-    }
-}
-
-
-
-
-
 .flag {
     width: 100%;
     height: 100%;
@@ -334,16 +300,14 @@ header {
     pointer-events: none;
 }
 .flag.horizontal {
-    flex-direction: column;
+    flex-direction: row;
 }
 .flag.vertical {
-    flex-direction: row;
+    flex-direction: column;
 }
 .flag > div {
     flex: 1;
 }
-
-
 
 .icon16big {
     user-select: none;
@@ -356,51 +320,23 @@ header {
     }
 }
 
-
-
-
 .big {
-    font-size: 27px;
-    text-shadow:
-            #5e0f70 0px 3px, #5e0f70 3px 0px, #5e0f70 3px 3px,
-            #000 -3px 0px, #000 0px -3px, #000 -3px -3px, #000 3px -3px, #000 -3px 3px,
-            #000 0px 6px, #000 6px 0px, #000 6px 6px,
-            #000 6px 3px, #000 3px 6px, #000 6px -3px, #000 -3px 6px;
+    font-size: 32px;
     @media(orientation: portrait) {
-        font-size: 18px;
-        text-shadow:
-                #5e0f70 0px 2px, #5e0f70 2px 0px, #5e0f70 2px 2px,
-                #000 -2px 0px, #000 0px -2px, #000 -2px -2px, #000 2px -2px, #000 -2px 2px,
-                #000 0px 4px, #000 4px 0px, #000 4px 4px,
-                #000 4px 2px, #000 2px 4px, #000 4px -2px, #000 -2px 4px;
+        font-size: 24px;
     }
 }
 
-small {
-    font-size: 9px;
-    text-shadow:
-            #5e0f70 0px 1px, #5e0f70 1px 0px, #5e0f70 1px 1px,
-            #000 -1px 0px, #000 0px -1px, #000 -1px -1px, #000 1px -1px, #000 -1px 1px,
-            #000 0px 2px, #000 2px 0px, #000 2px 2px,
-            #000 2px 1px, #000 1px 2px, #000 2px -1px, #000 -1px 2px;
-}
 a {
     color: #58c8f2;
     text-decoration: none;
-    text-shadow:
-            #000 -2px -2px, #000 2px -2px, #000 -2px 2px, #000 2px 2px,
-            #000 -2px 0px, #000 2px 0px, #000 0px -2px, #000 0px 2px;
 }
 
 .gray {
     color: #736070;
-    text-shadow: none;
 }
 .sub {
-    font-size: 9px;
-    text-shadow:
-            #000 -1px -1px, #000 1px -1px, #000 -1px 1px, #000 1px 1px,
-            #000 -1px 0px, #000 1px 0px, #000 0px -1px, #000 0px 1px;
+    font-size: 16px;
     color: #736070;
 }
 .hideportrait {

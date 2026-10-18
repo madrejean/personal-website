@@ -15,6 +15,38 @@ function addBackground() {
     document.body.appendChild(l3)
 }
 
+function addHeader(curpage, sticky) {
+    let self = document.currentScript;
+    let header = document.createElement("header")
+    let counter = 0
+    let curpagetext = () => {
+        counter++;
+        if (counter == curpage) return `<span class="sub hideportrait">(you're here)</span>`
+        return ``
+    }
+    let checkSticky = () => {
+        if (sticky) return `stickyheader`
+        return ``
+    }
+    header.innerHTML = `
+        <style>
+            .stickyheader {
+                @media(orientation: landscape) {
+                    position: sticky;
+                    top: 25px;
+                }
+            }
+        </style>
+        <div class="textbox alt ${checkSticky()}">
+            <div class="avbox hstretch">
+                <a href="index.html" class="menubutton">main ${curpagetext()}</a>
+                <a href="projects.html" class="menubutton">projects ${curpagetext()}</a>
+            </div>
+        </div>
+    `
+    self.parentElement.appendChild(header)
+}
+
 function calculateAge(dateString) {
     const today = new Date();
     const birthDate = new Date(dateString);
@@ -57,33 +89,29 @@ function initWavyText(){
 
 }
 
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (!targetId) return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
 function init() {
-    initWavyText()
+    initWavyText();
+    initSmoothScrolling();
 
-    const ageSpan = document.getElementById("ageSpan")
-    if (ageSpan) ageSpan.textContent = calculateAge("2007-02-15")
-
-    // forAllOfClassName("pablo", (el) => {
-    //     const clickSound = new Audio("assets/sounds/ominous.ogg");
-
-    //     el.addEventListener("mousedown", () => {
-    //         clickSound.currentTime = 0;
-    //         clickSound.play();
-    //         el.remove()
-    //     })
-    // })
-
-    // forAllOfClassName("menubutton", (el) => {
-    //     const hoverSound = new Audio("assets/sounds/hover.ogg");
-
-    //     el.addEventListener("mouseenter", () => {
-    //         let isLandscape = window.matchMedia("(orientation: landscape)").matches;
-    //         if (!isLandscape) return;
-
-    //         hoverSound.currentTime = 0;
-    //         hoverSound.play();
-    //     })
-    // })
+    const ageSpan = document.getElementById("ageSpan");
+    if (ageSpan) ageSpan.textContent = calculateAge("2007-02-15");
 }
 
 document.addEventListener("DOMContentLoaded", init)
